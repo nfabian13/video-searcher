@@ -9,7 +9,7 @@ function App(props) {
     <div>
       <NavBar/>
       <SearchInput />
-      <VideoList />
+      <VideoList title="Video List" />
     </div>
   )
 }

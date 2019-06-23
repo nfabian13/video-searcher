@@ -15,7 +15,7 @@ const Video = () => {
         <div style={{margin: 10}}>
             <Card>
                 <CardContent>
-                    <Typography gutterBottom variant="headline" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2">
                         Video Title
                     </Typography>
                     <Typography component="p">
