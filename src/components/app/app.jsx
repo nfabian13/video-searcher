@@ -1,19 +1,15 @@
 import React from 'react';
 import './app.css';
-import TextField from '@material-ui/core/TextField'
 import NavBar from '../navbar/navbar'
-
-
+import SearchInput from '../search-input/search-input'
+import VideoList from '../video-list/video-list'
 
 function App(props) {
   return (
     <div>
       <NavBar/>
-      <TextField
-        style={{padding: 24}}
-        margin="normal"
-        placeholder="Search video"
-      />
+      <SearchInput />
+      <VideoList />
     </div>
   )
 }

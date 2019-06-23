@@ -5,13 +5,13 @@ import Typography from '@material-ui/core/Typography'
 const NavBar = () => {
     return(
         <div>
-        <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h5" color="inherit">
-                    Youtube Video Searcher
-                </Typography>
-            </Toolbar>
-        </AppBar>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h5" color="inherit">
+                        Youtube Video Searcher
+                    </Typography>
+                </Toolbar>
+            </AppBar>
         </div>
     )
 }
