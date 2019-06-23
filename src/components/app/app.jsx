@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from '../../assets/images/logo.svg';
 import './app.css';
+import TextField from '@material-ui/core/TextField'
+import NavBar from '../navbar/navbar'
 
-function App() {
+
+
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavBar/>
+      <TextField
+        style={{padding: 24}}
+        margin="normal"
+        placeholder="Search video"
+      />
     </div>
-  );
+  )
 }
 
 export default App;
