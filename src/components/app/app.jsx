@@ -57,6 +57,11 @@ App.propTypes = {
   searchVideos: PropTypes.func.isRequired
 }
 
+App.defaultProps = {
+  isFetching: false,
+  videoList: {}
+}
+
 const mapStateToProps = state => {
   return {
     isFetching: state.isFetching,
