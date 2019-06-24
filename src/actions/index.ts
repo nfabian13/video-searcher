@@ -1,4 +1,4 @@
-import {SEARCH, ON_TEXT_CHANGED} from '../constants/action-types'
+import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED} from '../constants/action-types'
 import api from '../api/index'
 
 export interface ActionModel{
@@ -6,29 +6,27 @@ export interface ActionModel{
     payload: any
 }
 
+function searchStarted(){return {type: SEARCH_STARTED }; }
+function searchFailed(e: any){return {type: SEARCH_FAILED }; }
+
 export function searchVideos(searchTerm: string){
     return (dispatch: any) => {
-        api.searchVideoTerm(searchTerm)
+        dispatch(searchStarted())
+        return api.searchVideoTerm(searchTerm)
             .then((data: any) => {
-                debugger
-                return dispatch({ type: SEARCH, payload: {
-                    data,
-                    searchTerm
-                }
+                dispatch({ type: SEARCH_SUCCESS, payload: { data, searchTerm }
             })
         })
-        .catch((error: any) => {
-            //return dispatch()
-        })
+        .catch((error: any) => dispatch(searchFailed(error)))
     }
 }
 
-export function onTextChanged(value: string){
-    return (dispatch: any) => {
-        const model : ActionModel = {
-            type: ON_TEXT_CHANGED,
-            payload: value
-        } 
-        return dispatch(model)
-    }
-}
+// export function onTextChanged(value: string){
+//     return (dispatch: any) => {
+//         const model : ActionModel = {
+//             type: ON_TEXT_CHANGED,
+//             payload: value
+//         } 
+//         return dispatch(model)
+//     }
+// }

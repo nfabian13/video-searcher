@@ -1,5 +1,5 @@
 import {ActionModel} from '../actions/index'
-import { SEARCH, ON_TEXT_CHANGED } from '../constants/action-types'
+import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED } from '../constants/action-types'
 
 const initialState = {
     searchTerm: '',
@@ -8,14 +8,20 @@ const initialState = {
 }
 
 function rootReducer(state = initialState, action: ActionModel){
-    if(action.type === ON_TEXT_CHANGED){
-        return Object.assign({}, state, {searchTerm: action.payload})
+    // if(action.type === ON_TEXT_CHANGED){
+    //     return Object.assign({}, state, {searchTerm: action.payload})
+    // }
+
+    if(action.type === SEARCH_STARTED
+        || action.type === SEARCH_FAILED){
+        return Object.assign({}, state, { isFetching: !state.isFetching})
     }
 
-    if(action.type === SEARCH){
+    if(action.type === SEARCH_SUCCESS){
         return Object.assign({}, state, {
             videoList: action.payload['data'],
-            searchTerm: action.payload['searchTerm']
+            searchTerm: action.payload['searchTerm'],
+            isFetching: false
         })
     }
 

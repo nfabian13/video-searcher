@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import {secrets} from '../config/secrets'
 import {YoutubeVideoModel} from './models/youtubeVideoModel'
-import {VideoModel} from '../models'
+//import {VideoModel} from '../models'
 
 async function searchVideoTerm(searchTerm: string): Promise<any>{
     const httpPromise = httpGetRequestPromise(searchTerm)
