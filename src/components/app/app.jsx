@@ -4,10 +4,11 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos } from '../../actions/index.ts'
+import { searchVideos, openCloseModal } from '../../actions/index.ts'
 import { Subject } from 'rxjs';
 import {  debounceTime} from 'rxjs/operators';
 import PropTypes from 'prop-types'
+import VideoModal from '../video-modal/video-modal'
 
 let inputStream = new Subject();
 
@@ -16,6 +17,8 @@ class App extends Component {
     super()
 
     this.onTextChanged = this.onTextChanged.bind(this)
+    this.openModalClicked = this.openModalClicked.bind(this)
+    this.handleModalClose = this.handleModalClose.bind(this)
   }
 
   componentDidMount(){
@@ -37,6 +40,15 @@ class App extends Component {
     inputStream.next({ value: e.target.value })
   }
 
+  openModalClicked(e){
+    console.log('clicked from parent')
+    this.props.openCloseModal(true)
+  }
+
+  handleModalClose(){
+    this.props.openCloseModal(false)
+  }
+
   render(){
     const { isFetching, videoList } = this.props
     const title = isFetching ? 'Searching videos...' : 'These are the results based on you search'
@@ -50,7 +62,13 @@ class App extends Component {
 
           <VideoList 
             title={title}
-            dataSource={videoList} />
+            dataSource={videoList}
+            openModalClicked={this.openModalClicked} />
+
+          <VideoModal 
+            open={this.props.openModal}
+            handleClose={this.handleModalClose} />
+          
       </div>
     )
   }
@@ -70,13 +88,15 @@ App.defaultProps = {
 const mapStateToProps = state => {
   return {
     isFetching: state.isFetching,
-    videoList: state.videoList
+    videoList: state.videoList,
+    openModal: state.openModal
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchVideos: value => dispatch(searchVideos(value))
+    searchVideos: value => dispatch(searchVideos(value)),
+    openCloseModal: value => dispatch(openCloseModal(value))
   };
 }
 

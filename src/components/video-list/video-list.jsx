@@ -17,7 +17,9 @@ const VideoList = (props) => {
                 { dataSource.items.map(video => 
                     (
                         <Grid key={video.id.videoId} item xs={12} sm={6} lg={4} xl={3}>
-                            <Video data={video} />
+                            <Video 
+                                data={video} 
+                                openModalClicked={props.openModalClicked} />
                         </Grid>
                     ))
                 }

@@ -1,10 +1,11 @@
 import {ActionModel} from '../actions/index'
-import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED } from '../constants/action-types'
+import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_CLOSE_MODAL } from '../constants/action-types'
 
 const initialState = {
     searchTerm: '',
     videoList: {},
     isFetching: false,
+    openModal: false
 }
 
 function rootReducer(state = initialState, action: ActionModel){
@@ -23,6 +24,10 @@ function rootReducer(state = initialState, action: ActionModel){
             searchTerm: action.payload['searchTerm'],
             isFetching: false
         })
+    }
+
+    if(action.type === OPEN_CLOSE_MODAL){
+        return Object.assign({}, state, {openModal: action.payload})
     }
 
     return state
