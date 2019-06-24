@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 const VideoList = (props) => {
     const {title} = props
     return (
-        <div>
+        <div style={{margin: 15}}>
             <h3>{title}</h3>
             <Grid container spacing={10} style={{padding: 24}}>
                 { [1,2,3].map(video => 

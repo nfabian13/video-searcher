@@ -1,1 +1,1 @@
-export const ADD = 'ADD'
+export const SEARCH = 'SEARCH'

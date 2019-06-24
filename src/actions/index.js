@@ -1,5 +1,7 @@
-import {ADD} from '../constants/action-types'
+import {SEARCH} from '../constants/action-types'
 
-export function add(payload){
-    return { type: ADD, payload}
+export function searchVideos(payload){
+    return (dispatch) => {
+        return dispatch({ type: SEARCH, payload})
+    }
 }

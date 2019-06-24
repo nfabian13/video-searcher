@@ -3,6 +3,7 @@ const initialState = {
 }
 
 function rootReducer(state = initialState, action){
+    debugger;
     return state
 }
 
