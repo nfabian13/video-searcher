@@ -8,12 +8,18 @@ export interface ActionModel{
 
 export function searchVideos(searchTerm: string){
     return (dispatch: any) => {
-        //api.searchVideoTerm('surfing')
-        const model : ActionModel = {
-            type: SEARCH,
-            payload: searchTerm
-        } 
-        return dispatch(model)
+        api.searchVideoTerm(searchTerm)
+            .then((data: any) => {
+                debugger
+                return dispatch({ type: SEARCH, payload: {
+                    data,
+                    searchTerm
+                }
+            })
+        })
+        .catch((error: any) => {
+            //return dispatch()
+        })
     }
 }
 

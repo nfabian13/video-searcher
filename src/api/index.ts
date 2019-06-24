@@ -1,18 +1,20 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import {secrets} from '../config/secrets'
 import {YoutubeVideoModel} from './models/youtubeVideoModel'
 import {VideoModel} from '../models'
 
-function searchVideoTerm(searchTerm: string){
+async function searchVideoTerm(searchTerm: string): Promise<any>{
     const httpPromise = httpGetRequestPromise(searchTerm)
-    httpPromise.then(resp => {
-        const data: YoutubeVideoModel = resp.data
-        const { pageInfo, ...videoItems} = data
-        
-        console.log('youtube data', data)
-        return data
-    })
-    .catch(error => error)
+    try {
+        const resp = await httpPromise;
+        const data: YoutubeVideoModel = resp.data;
+        //const { pageInfo, ...videoItems } = data;
+        //console.log('youtube data', data);
+        return Promise.resolve(data);
+    }
+    catch (error) {
+        return await Promise.reject(error);
+    }
 }
 
 function httpGetRequestPromise(searchTerm: string) {

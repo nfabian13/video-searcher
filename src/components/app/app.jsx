@@ -4,7 +4,14 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { onTextChanged } from '../../actions/index.ts'
+import { searchVideos } from '../../actions/index.ts'
+import { Subject, empty, of } from 'rxjs';
+import {
+  catchError,
+  debounceTime
+} from 'rxjs/operators';
+
+let inputStream = new Subject();
 
 class App extends Component {
   constructor(){
@@ -13,12 +20,22 @@ class App extends Component {
     this.onTextChanged = this.onTextChanged.bind(this)
   }
 
+  componentDidMount(){
+    this.initializeInputStream()
+  }
+
+  initializeInputStream() {
+    inputStream
+    .pipe(debounceTime(1000))
+    .subscribe(val => {
+      this.props.searchVideos(val.value)
+    }, error=>{
+      // trigger an error action here
+    });
+  }
+
   onTextChanged(e){
-    const text = e.target.value
-    console.log('props', this.props)
-
-    this.props.onTextChanged(text)
-
+    inputStream.next({ value: e.target.value })
   }
 
   render(){
@@ -40,7 +57,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTextChanged: value => dispatch(onTextChanged(value))
+    searchVideos: value => dispatch(searchVideos(value))
   };
 }
 

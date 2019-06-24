@@ -3,7 +3,8 @@ import { SEARCH, ON_TEXT_CHANGED } from '../constants/action-types'
 
 const initialState = {
     searchTerm: '',
-    videoList: []
+    videoList: {},
+    isFetching: false,
 }
 
 function rootReducer(state = initialState, action: ActionModel){
@@ -12,7 +13,10 @@ function rootReducer(state = initialState, action: ActionModel){
     }
 
     if(action.type === SEARCH){
-        return Object.assign({}, state, {videoList: action.payload})
+        return Object.assign({}, state, {
+            videoList: action.payload['data'],
+            searchTerm: action.payload['searchTerm']
+        })
     }
 
     return state
