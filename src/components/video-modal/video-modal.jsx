@@ -1,6 +1,6 @@
 import React from 'react'
 import Modal from '@material-ui/core/Modal';
-import Typography from '@material-ui/core/Typography';
+import VideoIframe from '../video-iframe/video-iframe'
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -22,11 +22,8 @@ const divStyle = {
 }
 
 const VideoModal = (props) => {
-    const { open } = props
-    console.log('openModal', open)
-
+    const { open, videoId } = props
     const handleClose = () => props.handleClose()
-
     return(
         <div>
             <Modal
@@ -35,12 +32,7 @@ const VideoModal = (props) => {
                 open={open}
                 onClose={handleClose}>
                 <div style={divStyle}>
-                    <Typography variant="h6" id="modal-title">
-                        Text in a modal
-                    </Typography>
-                    <Typography variant="subtitle1" id="simple-modal-description">
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
+                   <VideoIframe youtubeVideoId={props.videoId}/>
                 </div>
             </Modal>
         </div>

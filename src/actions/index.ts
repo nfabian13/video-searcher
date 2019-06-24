@@ -1,4 +1,4 @@
-import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_CLOSE_MODAL} from '../constants/action-types'
+import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, CLOSE_MODAL} from '../constants/action-types'
 import api from '../api/index'
 
 export interface ActionModel{
@@ -21,8 +21,12 @@ export function searchVideos(searchTerm: string){
     }
 }
 
-export function openCloseModal(open: boolean){
-    return { type: OPEN_CLOSE_MODAL, payload: open }
+export function openModal(open: boolean, videoId: string){
+    return { type: OPEN_MODAL, payload: { open, videoId } }
+}
+
+export function closeModal(){
+    return { type: CLOSE_MODAL, payload: { } }
 }
 
 // export function onTextChanged(value: string){

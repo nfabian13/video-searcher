@@ -4,7 +4,7 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos, openCloseModal } from '../../actions/index.ts'
+import { searchVideos, openModal, closeModal } from '../../actions/index.ts'
 import { Subject } from 'rxjs';
 import {  debounceTime} from 'rxjs/operators';
 import PropTypes from 'prop-types'
@@ -40,13 +40,12 @@ class App extends Component {
     inputStream.next({ value: e.target.value })
   }
 
-  openModalClicked(e){
-    console.log('clicked from parent')
-    this.props.openCloseModal(true)
+  openModalClicked(videoId){
+    this.props.openModal(true, videoId)
   }
 
   handleModalClose(){
-    this.props.openCloseModal(false)
+    this.props.closeModal()
   }
 
   render(){
@@ -66,8 +65,9 @@ class App extends Component {
             openModalClicked={this.openModalClicked} />
 
           <VideoModal 
-            open={this.props.openModal}
-            handleClose={this.handleModalClose} />
+            open={this.props.isModalOpen}
+            handleClose={this.handleModalClose}
+            videoId={this.props.videoId} />
           
       </div>
     )
@@ -89,14 +89,16 @@ const mapStateToProps = state => {
   return {
     isFetching: state.isFetching,
     videoList: state.videoList,
-    openModal: state.openModal
+    isModalOpen: state.openModal,
+    videoId: state.videoId
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     searchVideos: value => dispatch(searchVideos(value)),
-    openCloseModal: value => dispatch(openCloseModal(value))
+    openModal: (value, videoId) => dispatch(openModal(value, videoId)),
+    closeModal: () => dispatch(closeModal())
   };
 }
 

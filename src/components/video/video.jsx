@@ -6,8 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {PropTypes} from 'prop-types'
-import {connect} from 'react-redux'
-import {openCloseModal} from '../../actions/index.ts'
 
 class Video extends Component{
     constructor(){
@@ -22,7 +20,7 @@ class Video extends Component{
 
     watchNowClicked(e){
         e.preventDefault()
-        this.props.openModalClicked();
+        this.props.openModalClicked(this.props.data.id.videoId);
     }
 
     render(){
@@ -60,8 +58,7 @@ class Video extends Component{
 
 Video.propTypes = {
     data: PropTypes.object.isRequired,
-    openModalClicked: PropTypes.func.isRequired,
-    //openModal: PropTypes.bool.isRequired
+    openModalClicked: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
