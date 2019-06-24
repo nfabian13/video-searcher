@@ -5,21 +5,25 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import {PropTypes} from 'prop-types' 
 
-// <CardMedia style={{height: 0, paddingTop: '56.25%'}}
-// image={props.course.fields.courseImage.fields.file.url}
-// title={props.course.fields.title} />
+const Video = (props) => {
+    const data = props.data.snippet
+    const thumbnail = data.thumbnails.medium
 
-const Video = () => {
     return (
         <div style={{margin: 10}}>
             <Card>
+                <CardMedia 
+                    style={{height: 0, paddingTop: '56.25%'}}
+                    image={thumbnail.url}
+                    title={data.title} />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        Video Title
+                        {data.title}
                     </Typography>
                     <Typography component="p">
-                        Video Description
+                        {data.description}
                     </Typography>
                 </CardContent>
                 <CardActions>
@@ -30,6 +34,10 @@ const Video = () => {
             </Card>
         </div>
     )
+}
+
+Video.propTypes = {
+    data: PropTypes.object.isRequired
 }
 
 export default Video

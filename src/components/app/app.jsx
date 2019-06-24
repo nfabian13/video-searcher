@@ -38,14 +38,19 @@ class App extends Component {
   }
 
   render(){
-    console.log('is fetching', this.props.isFetching)
+    const { isFetching, videoList } = this.props
+    const title = isFetching ? 'Searching videos...' : 'These are the results based on you search'
     return (
       <div>
         <NavBar/>
+        
         <SearchInput 
           style={{padding: 24, width: 500}}
-          onChange={this.onTextChanged}/>
-        <VideoList title="These are the results based on you search" />
+          onChange={this.onTextChanged} />
+
+          <VideoList 
+            title={title}
+            dataSource={videoList} />
       </div>
     )
   }

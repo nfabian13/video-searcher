@@ -4,15 +4,20 @@ import Video from '../video/video'
 import PropTypes from 'prop-types'
 
 const VideoList = (props) => {
-    const {title} = props
+    const {title, dataSource} = props
+
+    if(!dataSource.items || (dataSource.items && dataSource.items.length === 0)){
+        return <label>No results</label>
+    }
+
     return (
         <div style={{margin: 15}}>
             <h3>{title}</h3>
             <Grid container spacing={10} style={{padding: 24}}>
-                { [1,2,3].map(video => 
+                { dataSource.items.map(video => 
                     (
-                        <Grid key={video} item xs={12} sm={6} lg={4} xl={3}>
-                            <Video />
+                        <Grid key={video.id.videoId} item xs={12} sm={6} lg={4} xl={3}>
+                            <Video data={video} />
                         </Grid>
                     ))
                 }
@@ -22,7 +27,8 @@ const VideoList = (props) => {
 }
 
 VideoList.propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    dataSource: PropTypes.object.isRequired
 }
 
 export default VideoList
