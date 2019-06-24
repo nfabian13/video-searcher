@@ -4,7 +4,7 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos } from '../../actions'
+import { onTextChanged } from '../../actions/index.ts'
 
 class App extends Component {
   constructor(){
@@ -17,7 +17,7 @@ class App extends Component {
     const text = e.target.value
     console.log('props', this.props)
 
-    this.props.searchVideos(text)
+    this.props.onTextChanged(text)
 
   }
 
@@ -40,7 +40,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchVideos: value => dispatch(searchVideos(value))
+    onTextChanged: value => dispatch(onTextChanged(value))
   };
 }
 
