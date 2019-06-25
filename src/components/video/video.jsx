@@ -6,12 +6,14 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {PropTypes} from 'prop-types'
+import api from '../../api'
 
 class Video extends Component{
     constructor(){
         super()
 
         this.watchNowClicked = this.watchNowClicked.bind(this)
+        this.saveClicked = this.saveClicked.bind(this)
     }
 
     componentDidMount(){
@@ -21,6 +23,13 @@ class Video extends Component{
     watchNowClicked(e){
         e.preventDefault()
         this.props.openModalClicked(this.props.data.id.videoId);
+    }
+
+    saveClicked(e){
+        e.preventDefault()
+        api.signup().then(user => {
+            console.log('user is', user)
+        }).catch(e => console.log(e))
     }
 
     render(){
@@ -43,10 +52,10 @@ class Video extends Component{
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary" href="#">
-                            Bookmark
+                        <Button onClick={this.saveClicked} size="small" color="primary">
+                            Save for later
                         </Button>
-                        <Button onClick={this.watchNowClicked} size="small" color="primary" href="#">
+                        <Button onClick={this.watchNowClicked} size="small" color="primary">
                             Watch now
                         </Button> 
                     </CardActions>

@@ -6,7 +6,7 @@ const initialState = {
     videoList: {},
     isFetching: false,
     openModal: false,
-    videoId: null
+    videoId: ''
 }
 
 function rootReducer(state = initialState, action: ActionModel){
@@ -30,6 +30,8 @@ function rootReducer(state = initialState, action: ActionModel){
     if(action.type === CLOSE_MODAL){
         return Object.assign({}, state, {openModal: false, videoId: null})
     }
+
+    
 
     return state
 }

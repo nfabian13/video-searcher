@@ -10,3 +10,10 @@ interface Thumbnail{
     width: number,
     height: number
 }
+
+export interface UserModel{
+    userId: string,
+    email: string
+    displayName: string,
+    photoUrl: string
+}

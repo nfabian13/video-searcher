@@ -1,7 +1,10 @@
-import axios, { AxiosResponse } from 'axios'
-import {secrets} from '../config/secrets'
+import axios from 'axios'
+import {youtube} from '../config/secrets'
 import {YoutubeVideoModel} from './models/youtubeVideoModel'
-//import {VideoModel} from '../models'
+import db from '../db/firebase'
+import * as auth from '../auth/authentication'
+import {UserModel} from '../models'
+
 
 async function searchVideoTerm(searchTerm: string): Promise<any>{
     const httpPromise = httpGetRequestPromise(searchTerm)
@@ -17,10 +20,27 @@ async function searchVideoTerm(searchTerm: string): Promise<any>{
     }
 }
 
-function httpGetRequestPromise(searchTerm: string) {
+function saveVideoToMyLib(video: any){
+    const currentUserId = 'sadsfi32u432'
+    const usersRef = db.ref('users-videos').child(currentUserId).child('list')
+}
+
+async function signup(): Promise<UserModel | any>{
+    try{
+        const user: UserModel = await auth.signupWithGoogle()
+        const { userId, ...remaining} = user
+        debugger
+        const result = await db.ref('users').child(userId).set(remaining)
+        Promise.resolve(user)
+    }catch(e){
+        Promise.reject(e)
+    }
+}
+
+function httpGetRequestPromise(searchTerm: string): Promise<any> {
     return axios.get('https://www.googleapis.com/youtube/v3/search', {
        params: {
-           key: secrets.youtubeApiKey,
+           key: youtube.apiKey,
            part: 'snippet',
            maxResults: 25,
            q: searchTerm,
@@ -32,7 +52,8 @@ function httpGetRequestPromise(searchTerm: string) {
 
 
 const api = {
-    searchVideoTerm
+    searchVideoTerm,
+    signup
 }
 
 export default api
