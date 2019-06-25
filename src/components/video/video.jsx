@@ -6,7 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {PropTypes} from 'prop-types'
-import api from '../../api'
 
 class Video extends Component{
     constructor(){
@@ -15,11 +14,7 @@ class Video extends Component{
         this.watchNowClicked = this.watchNowClicked.bind(this)
         this.saveClicked = this.saveClicked.bind(this)
     }
-
-    componentDidMount(){
-        //console.log('props', this.props)
-    }
-
+    
     watchNowClicked(e){
         e.preventDefault()
         this.props.openModalClicked(this.props.data.id.videoId);
@@ -27,9 +22,7 @@ class Video extends Component{
 
     saveClicked(e){
         e.preventDefault()
-        api.signup().then(user => {
-            console.log('user is', user)
-        }).catch(e => console.log(e))
+        this.props.signup()
     }
 
     render(){
@@ -70,11 +63,4 @@ Video.propTypes = {
     openModalClicked: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => {
-    return {
-        openModal: state.openModal
-    }
-}
-
 export default Video
-//export default connect(mapStateToProps)(Video)

@@ -4,7 +4,7 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos, openModal, closeModal } from '../../actions/index.ts'
+import { searchVideos, openModal, closeModal, signupUser } from '../../actions'
 import { Subject } from 'rxjs';
 import {  debounceTime} from 'rxjs/operators';
 import PropTypes from 'prop-types'
@@ -19,6 +19,7 @@ class App extends Component {
     this.onTextChanged = this.onTextChanged.bind(this)
     this.openModalClicked = this.openModalClicked.bind(this)
     this.handleModalClose = this.handleModalClose.bind(this)
+    this.signup = this.signup.bind(this)
   }
 
   componentDidMount(){
@@ -48,12 +49,17 @@ class App extends Component {
     this.props.closeModal()
   }
 
+  signup(){
+    this.props.signupUser()
+  }
+
   render(){
-    const { isFetching, videoList } = this.props
+    const { isFetching, videoList, currentUser } = this.props
     const title = isFetching ? 'Searching videos...' : 'These are the results based on you search'
+    console.log('current user', currentUser)
     return (
       <div>
-        <NavBar/>
+        <NavBar currentUser={currentUser}/>
         
         <SearchInput 
           style={{padding: 24, width: 500}}
@@ -62,6 +68,7 @@ class App extends Component {
           <VideoList 
             title={title}
             dataSource={videoList}
+            signup={this.signup}
             openModalClicked={this.openModalClicked} />
 
           <VideoModal 
@@ -90,7 +97,8 @@ const mapStateToProps = state => {
     isFetching: state.isFetching,
     videoList: state.videoList,
     isModalOpen: state.openModal,
-    videoId: state.videoId
+    videoId: state.videoId,
+    currentUser: state.currentUser
   }
 }
 
@@ -98,7 +106,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     searchVideos: value => dispatch(searchVideos(value)),
     openModal: (value, videoId) => dispatch(openModal(value, videoId)),
-    closeModal: () => dispatch(closeModal())
+    closeModal: () => dispatch(closeModal()),
+    signupUser: () => dispatch(signupUser())
   };
 }
 

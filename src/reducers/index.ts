@@ -1,12 +1,14 @@
 import {ActionModel} from '../actions/index'
-import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, CLOSE_MODAL } from '../constants/action-types'
+import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, 
+    CLOSE_MODAL, AUTH } from '../constants/action-types'
 
-const initialState = {
+const initialState: any = {
     searchTerm: '',
     videoList: {},
     isFetching: false,
     openModal: false,
-    videoId: ''
+    videoId: null,
+    currentUser: null
 }
 
 function rootReducer(state = initialState, action: ActionModel){
@@ -31,7 +33,9 @@ function rootReducer(state = initialState, action: ActionModel){
         return Object.assign({}, state, {openModal: false, videoId: null})
     }
 
-    
+    if(action.type === AUTH){
+        return Object.assign({}, state, {currentUser: action.payload})
+    }
 
     return state
 }

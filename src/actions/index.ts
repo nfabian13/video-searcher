@@ -1,5 +1,7 @@
-import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, CLOSE_MODAL} from '../constants/action-types'
+import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, 
+    CLOSE_MODAL, AUTH}  from '../constants/action-types'
 import api from '../api/index'
+import { UserModel } from '../models';
 
 export interface ActionModel{
     type: string,
@@ -14,10 +16,9 @@ export function searchVideos(searchTerm: string){
         dispatch(searchStarted())
         return api.searchVideoTerm(searchTerm)
             .then((data: any) => {
-                dispatch({ type: SEARCH_SUCCESS, payload: { data, searchTerm }
+                dispatch({ type: SEARCH_SUCCESS, payload: { data, searchTerm }})
             })
-        })
-        .catch((error: any) => dispatch(searchFailed(error)))
+            .catch((error: any) => dispatch(searchFailed(error)))
     }
 }
 
@@ -29,12 +30,10 @@ export function closeModal(){
     return { type: CLOSE_MODAL, payload: { } }
 }
 
-// export function onTextChanged(value: string){
-//     return (dispatch: any) => {
-//         const model : ActionModel = {
-//             type: ON_TEXT_CHANGED,
-//             payload: value
-//         } 
-//         return dispatch(model)
-//     }
-// }
+export function signupUser(){
+    return (dispatch: any) => {
+        return api.signup()
+            .then((user: UserModel) => dispatch({type: AUTH, payload: user}))
+            .catch((e: any) => console.log('error', e))          
+    }
+}

@@ -32,7 +32,7 @@ const VideoModal = (props) => {
                 open={open}
                 onClose={handleClose}>
                 <div style={divStyle}>
-                   <VideoIframe youtubeVideoId={props.videoId}/>
+                   <VideoIframe youtubeVideoId={videoId}/>
                 </div>
             </Modal>
         </div>
