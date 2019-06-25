@@ -29,9 +29,12 @@ async function signup(): Promise<UserModel | any>{
     try{
         const user: UserModel = await auth.signupWithGoogle()
         const { userId, ...remaining} = user
-        debugger
-        const result = await db.ref('users').child(userId).set(remaining)
-        Promise.resolve(user)
+
+        return new Promise((resolve, reject) => {
+            db.ref('users').child(userId).set(remaining)
+                .then(() => resolve(user))
+                .catch(error => reject(error))
+        })
     }catch(e){
         Promise.reject(e)
     }
