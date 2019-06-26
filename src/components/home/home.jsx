@@ -54,14 +54,17 @@ class Home extends Component {
   render(){
     const { isFetching, videoList, currentUser } = this.props
     const title = isFetching ? 'Searching videos...' : 'These are the results based on you search'
-    console.log('current user', currentUser)
+    const isLoggedIn = currentUser ? true: false
+
     return (
       <div>
-        <NavBar currentUser={currentUser}/>
+        <NavBar isLoggedIn={isLoggedIn}/>
         
         <SearchInput 
           style={{padding: 24, width: 500}}
           onChange={this.onTextChanged} />
+
+          <br/>
 
           <VideoList 
             title={title}
