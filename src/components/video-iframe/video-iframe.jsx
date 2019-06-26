@@ -12,6 +12,7 @@ export default ({ youtubeVideoId }) => {
         }}
       >
         <iframe
+          title='video-iframe'
           style={{
             position: "absolute",
             top: 0,

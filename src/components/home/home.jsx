@@ -66,7 +66,6 @@ class Home extends Component {
           <VideoList 
             title={title}
             dataSource={videoList}
-            signup={this.signup}
             openModalClicked={this.openModalClicked} />
 
           <VideoModal 

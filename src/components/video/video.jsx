@@ -22,7 +22,6 @@ class Video extends Component{
 
     saveClicked(e){
         e.preventDefault()
-        this.props.signup()
     }
 
     render(){

@@ -19,7 +19,6 @@ const VideoList = (props) => {
                         <Grid key={video.id.videoId} item xs={12} sm={6} lg={4} xl={3}>
                             <Video 
                                 data={video}
-                                signup={props.signup}
                                 openModalClicked={props.openModalClicked} />
                         </Grid>
                     ))
