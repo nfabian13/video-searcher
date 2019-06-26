@@ -1,7 +1,7 @@
 import {ActionModel} from '../actions/index'
 
 import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, SAVE_VIDEO_REQUEST, SAVE_VIDEO_SUCCESS
-    , SAVE_VIDEO_FAILED, CLOSE_MODAL, AUTH, LOG_OUT, GET_MY_VIDEO,GET_MY_VIDEO_FAILED } 
+    , SAVE_VIDEO_FAILED, CLOSE_MODAL, AUTH, LOG_OUT, GET_MY_VIDEO } 
 from '../constants/action-types'
 
 const initialState: any = {

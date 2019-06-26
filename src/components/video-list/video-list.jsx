@@ -2,7 +2,6 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Video from '../video/video'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
 
 const getVideoObj = (data) =>{
     return {
