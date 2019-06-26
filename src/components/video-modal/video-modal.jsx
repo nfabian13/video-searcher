@@ -29,7 +29,7 @@ const VideoModal = (props) => {
             <Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
-                open={open}
+                open={open || false}
                 onClose={handleClose}>
                 <div style={divStyle}>
                    <VideoIframe youtubeVideoId={videoId}/>
