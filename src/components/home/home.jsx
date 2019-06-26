@@ -3,7 +3,7 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos, openModal, closeModal, logoutUser } from '../../actions'
+import { searchVideos, openModal, closeModal, logoutUser, saveVideo } from '../../actions'
 import { Subject } from 'rxjs';
 import {  debounceTime} from 'rxjs/operators';
 import PropTypes from 'prop-types'
@@ -19,6 +19,7 @@ class Home extends Component {
     this.openModalClicked = this.openModalClicked.bind(this)
     this.handleModalClose = this.handleModalClose.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.handleSaveVideo = this.handleSaveVideo.bind(this)
   }
 
   componentDidMount(){
@@ -51,6 +52,11 @@ class Home extends Component {
   handleLogout(){
     this.props.logout()
   }
+  
+  handleSaveVideo(video){
+    console.log('video saved', video)
+    this.props.saveVideo(video, this.props.currentUser.userId)
+  }
 
   render(){
     const { isFetching, videoList, currentUser } = this.props
@@ -61,7 +67,8 @@ class Home extends Component {
       <div>
         <NavBar 
           isLoggedIn={isLoggedIn}
-          logout={this.handleLogout}/>
+          logout={this.handleLogout}
+          handleSaveVideo={this.handleSaveVideo}/>
         
         <SearchInput 
           style={{padding: 24, width: 500}}
@@ -72,7 +79,8 @@ class Home extends Component {
           <VideoList 
             title={title}
             dataSource={videoList}
-            openModalClicked={this.openModalClicked} />
+            openModalClicked={this.openModalClicked}
+            handleSaveVideo={this.handleSaveVideo} />
 
           <VideoModal 
             open={this.props.isModalOpen}
@@ -110,7 +118,8 @@ const mapDispatchToProps = (dispatch) => {
     searchVideos: value => dispatch(searchVideos(value)),
     openModal: (value, videoId) => dispatch(openModal(value, videoId)),
     closeModal: () => dispatch(closeModal()),
-    logout: () => dispatch(logoutUser())
+    logout: () => dispatch(logoutUser()),
+    saveVideo: (video, userId) => dispatch(saveVideo(video, userId))
   };
 }
 

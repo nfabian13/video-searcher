@@ -17,23 +17,22 @@ class Video extends Component{
     
     watchNowClicked(e){
         e.preventDefault()
-        this.props.openModalClicked(this.props.data.id.videoId);
+        this.props.openModalClicked(this.props.data.videoId);
     }
 
     saveClicked(e){
-        e.preventDefault()
+        this.props.handleSaveVideo(this.props.data);
     }
 
     render(){
-        const data = this.props.data.snippet
-        const thumbnail = data.thumbnails.medium
+        const data = this.props.data
         
         return (
             <div style={{margin: 10}}>
                 <Card>
                     <CardMedia 
                         style={{height: 0, paddingTop: '56.25%'}}
-                        image={thumbnail.url}
+                        image={data.thumbnail.url}
                         title={data.title} />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
@@ -59,7 +58,8 @@ class Video extends Component{
 
 Video.propTypes = {
     data: PropTypes.object.isRequired,
-    openModalClicked: PropTypes.func.isRequired
+    openModalClicked: PropTypes.func.isRequired,
+    handleSaveVideo: PropTypes.func.isRequired
 }
 
 export default Video

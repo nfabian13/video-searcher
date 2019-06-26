@@ -1,7 +1,8 @@
 import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, 
-    CLOSE_MODAL, AUTH, LOG_OUT}  from '../constants/action-types'
+    CLOSE_MODAL, AUTH, LOG_OUT, SAVE_VIDEO_REQUEST, SAVE_VIDEO_SUCCESS, SAVE_VIDEO_FAILED}  
+    from '../constants/action-types'
 import api from '../api/index'
-import { UserModel } from '../models';
+import { UserModel, VideoModel } from '../models';
 
 export interface ActionModel{
     type: string,
@@ -45,5 +46,17 @@ export function logoutUser(){
         return api.signOut()
             .then(() => dispatch({type: LOG_OUT, payload: null}))
             .catch((e: any) => console.log('error', e))        
+    }
+}
+
+export function saveVideo(video: VideoModel, userId: string){
+    return (dispatch: any) => {
+        dispatch({type: SAVE_VIDEO_REQUEST})
+        return api.saveVideo(video, userId)
+            .then(() => dispatch({type: SAVE_VIDEO_SUCCESS, payload: video}))
+            .catch((e: any) => {
+                console.log('error', e)
+                dispatch({type: SAVE_VIDEO_FAILED, payload: 'Error Saving video'})
+            })        
     }
 }

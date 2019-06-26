@@ -3,7 +3,7 @@ import {youtube} from '../config/secrets'
 import {YoutubeVideoModel} from './models/youtubeVideoModel'
 import db from '../db/firebase'
 import * as auth from '../auth/authentication'
-import {UserModel} from '../models'
+import {UserModel, VideoModel} from '../models'
 
 
 async function searchVideoTerm(searchTerm: string): Promise<any>{
@@ -13,16 +13,22 @@ async function searchVideoTerm(searchTerm: string): Promise<any>{
         const data: YoutubeVideoModel = resp.data;
         //const { pageInfo, ...videoItems } = data;
         //console.log('youtube data', data);
-        return Promise.resolve(data);
+        return await Promise.resolve(data);
     }
     catch (error) {
         return await Promise.reject(error);
     }
 }
 
-function saveVideoToMyLib(video: any){
-    const currentUserId = 'sadsfi32u432'
-    const usersRef = db.ref('users-videos').child(currentUserId).child('list')
+async function saveVideo(video: VideoModel, currentUserId: string): Promise<any>{
+    const userVidsRef = db.ref(`users-videos/${currentUserId}/list/${video.videoId}`)
+    try {
+        await userVidsRef.set(video);
+        return await Promise.resolve(video);
+    }
+    catch (e) {
+        return await Promise.reject(e);
+    }
 }
 
 async function signup(): Promise<UserModel | any>{
@@ -30,7 +36,7 @@ async function signup(): Promise<UserModel | any>{
         const user: UserModel = await auth.signupWithGoogle()
         const { userId, ...remaining} = user
 
-        return new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
             db.ref('users').child(userId).set(remaining)
                 .then(() => resolve(user))
                 .catch(error => reject(error))
@@ -44,9 +50,9 @@ async function signOut(): Promise<any>{
     try{
        const success = await auth.signOut()
 
-        return Promise.resolve(success);
+        return await Promise.resolve(success);
     }catch(e){
-        return Promise.reject(e)
+        return await Promise.reject(e)
     }
 }
 
@@ -69,7 +75,8 @@ function httpGetRequestPromise(searchTerm: string): Promise<any> {
 const api = {
     searchVideoTerm,
     signup,
-    signOut
+    signOut,
+    saveVideo
 }
 
 export default api
