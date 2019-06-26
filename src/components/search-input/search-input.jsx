@@ -8,7 +8,7 @@ const SearchInput = (props) => {
         <TextField
             style={style}
             margin="normal"
-            placeholder="Search video"
+            placeholder="Video name"
             onChange={onChange}
         />
     );

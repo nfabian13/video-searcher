@@ -7,7 +7,7 @@ const VideoList = (props) => {
     const {title, dataSource} = props
 
     if(!dataSource.items || (dataSource.items && dataSource.items.length === 0)){
-        return <label>Type to start searching videos</label>
+        return <label style={{marginLeft: 15}}>Type to start searching videos</label>
     }
 
     return (

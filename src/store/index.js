@@ -21,6 +21,3 @@ export default () => {
     let persistor = persistStore(store)
     return { store, persistor }
 }
-
-//const store = createStore(rootReducer, storeEnhancers(applyMiddleware(thunk)))
-//export default store
