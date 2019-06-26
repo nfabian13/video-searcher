@@ -36,9 +36,21 @@ async function signup(): Promise<UserModel | any>{
                 .catch(error => reject(error))
         })
     }catch(e){
-        Promise.reject(e)
+        return Promise.reject(e)
     }
 }
+
+async function signOut(): Promise<any>{
+    try{
+       const success = await auth.signOut()
+
+        return Promise.resolve(success);
+    }catch(e){
+        return Promise.reject(e)
+    }
+}
+
+
 
 function httpGetRequestPromise(searchTerm: string): Promise<any> {
     return axios.get('https://www.googleapis.com/youtube/v3/search', {
@@ -56,7 +68,8 @@ function httpGetRequestPromise(searchTerm: string): Promise<any> {
 
 const api = {
     searchVideoTerm,
-    signup
+    signup,
+    signOut
 }
 
 export default api

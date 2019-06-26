@@ -1,5 +1,5 @@
 import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, 
-    CLOSE_MODAL, AUTH}  from '../constants/action-types'
+    CLOSE_MODAL, AUTH, LOG_OUT}  from '../constants/action-types'
 import api from '../api/index'
 import { UserModel } from '../models';
 
@@ -33,7 +33,17 @@ export function closeModal(){
 export function signupUser(){
     return (dispatch: any) => {
         return api.signup()
-            .then((user: UserModel) => dispatch({type: AUTH, payload: user}))
+            .then((user: UserModel) => {
+                dispatch({type: AUTH, payload: user})
+            })
             .catch((e: any) => console.log('error', e))          
+    }
+}
+
+export function logoutUser(){
+    return (dispatch: any) => {
+        return api.signOut()
+            .then(() => dispatch({type: LOG_OUT, payload: null}))
+            .catch((e: any) => console.log('error', e))        
     }
 }

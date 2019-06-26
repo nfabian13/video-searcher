@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import './app.css';
 import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos, openModal, closeModal, signupUser } from '../../actions'
+import { searchVideos, openModal, closeModal } from '../../actions'
 import { Subject } from 'rxjs';
 import {  debounceTime} from 'rxjs/operators';
 import PropTypes from 'prop-types'
@@ -12,7 +11,7 @@ import VideoModal from '../video-modal/video-modal'
 
 let inputStream = new Subject();
 
-class App extends Component {
+class Home extends Component {
   constructor(){
     super()
 
@@ -50,7 +49,6 @@ class App extends Component {
   }
 
   signup(){
-    this.props.signupUser()
   }
 
   render(){
@@ -81,13 +79,13 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+Home.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   videoList: PropTypes.object.isRequired,
   searchVideos: PropTypes.func.isRequired
 }
 
-App.defaultProps = {
+Home.defaultProps = {
   isFetching: false,
   videoList: {}
 }
@@ -106,9 +104,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     searchVideos: value => dispatch(searchVideos(value)),
     openModal: (value, videoId) => dispatch(openModal(value, videoId)),
-    closeModal: () => dispatch(closeModal()),
-    signupUser: () => dispatch(signupUser())
+    closeModal: () => dispatch(closeModal())
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

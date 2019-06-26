@@ -16,3 +16,11 @@ export function signupWithGoogle(): Promise<UserModel | any>{
         }).catch(e => reject(e))
     })
 }
+
+export function signOut(): Promise<any>{
+    return new Promise((resolve, reject) => {
+        firebaseAuth.signOut()
+            .then(() => resolve(true))
+            .catch(error => reject(error));
+    })
+}

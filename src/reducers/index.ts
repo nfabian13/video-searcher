@@ -1,6 +1,7 @@
 import {ActionModel} from '../actions/index'
+
 import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, 
-    CLOSE_MODAL, AUTH } from '../constants/action-types'
+    CLOSE_MODAL, AUTH, LOG_OUT } from '../constants/action-types'
 
 const initialState: any = {
     searchTerm: '',
@@ -35,6 +36,10 @@ function rootReducer(state = initialState, action: ActionModel){
 
     if(action.type === AUTH){
         return Object.assign({}, state, {currentUser: action.payload})
+    }
+
+    if(action.type === LOG_OUT){
+        return Object.assign({}, state, {currentUser: null})
     }
 
     return state
