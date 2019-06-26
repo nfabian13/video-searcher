@@ -5,25 +5,29 @@ import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, SAVE_VIDEO_R
 
 const initialState: any = {
     searchTerm: '',
-    videoList: {},
+    videoList: [],
     isFetching: false,
     openModal: false,
     videoId: null,
     currentUser: null,
     error: null,
     myVideos: [],
-    isSaving: false
+    isSaving: false,
+    searchError: null
 }
 
 function rootReducer(state = initialState, action: ActionModel){
-    if(action.type === SEARCH_STARTED
-        || action.type === SEARCH_FAILED){
-        return Object.assign({}, state, { isFetching: !state.isFetching})
+    if(action.type === SEARCH_STARTED){
+        return Object.assign({}, state, { isFetching: true})
+    }
+
+    if(action.type === SEARCH_FAILED){
+        return Object.assign({}, state, { isFetching: true, searchError: action.payload.message})
     }
 
     if(action.type === SEARCH_SUCCESS){
         return Object.assign({}, state, {
-            videoList: action.payload['data'],
+            videoList: action.payload['data'].items,
             searchTerm: action.payload['searchTerm'],
             isFetching: false
         })
@@ -56,7 +60,7 @@ function rootReducer(state = initialState, action: ActionModel){
     if(action.type === SAVE_VIDEO_SUCCESS){
         return Object.assign({}, state, {
             isSaving: false, 
-            myVideos: state.myVideos.concat(action.payload)
+            myVideos: action.payload
         })
     }
 

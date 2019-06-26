@@ -10,7 +10,7 @@ export interface ActionModel{
 }
 
 function searchStarted(){return {type: SEARCH_STARTED }; }
-function searchFailed(e: any){return {type: SEARCH_FAILED }; }
+function searchFailed(e: any){return {type: SEARCH_FAILED, payload: e }; }
 
 export function searchVideos(searchTerm: string){
     return (dispatch: any) => {
@@ -58,5 +58,16 @@ export function saveVideo(video: VideoModel, userId: string){
                 console.log('error', e)
                 dispatch({type: SAVE_VIDEO_FAILED, payload: 'Error Saving video'})
             })        
+    }
+}
+
+export function getMyVideos(userId:string){
+    return (dispatch: any) => {
+        return api.getMyVideos(userId)
+            .then((vids: any) => dispatch({type: SAVE_VIDEO_SUCCESS, payload: vids}))
+            .catch((e: any) => {
+                console.log('error', e)
+                dispatch({type: SAVE_VIDEO_FAILED, payload: 'Error Saving video'})
+            })       
     }
 }

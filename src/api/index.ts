@@ -56,7 +56,12 @@ async function signOut(): Promise<any>{
     }
 }
 
-
+function getMyVideos(currentUserId: string): Promise<any>{
+    const userVidsRef = db.ref(`users-videos/${currentUserId}/list`)
+    return userVidsRef.once('value').then(videos => {
+        return Promise.resolve(videos.val())
+    }).catch((e) => Promise.reject(e))
+}
 
 function httpGetRequestPromise(searchTerm: string): Promise<any> {
     return axios.get('https://www.googleapis.com/youtube/v3/search', {
@@ -76,7 +81,8 @@ const api = {
     searchVideoTerm,
     signup,
     signOut,
-    saveVideo
+    saveVideo,
+    getMyVideos
 }
 
 export default api

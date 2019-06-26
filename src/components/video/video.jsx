@@ -24,6 +24,14 @@ class Video extends Component{
         this.props.handleSaveVideo(this.props.data);
     }
 
+    saveButton = () => (
+        this.props.showSaveButton 
+            ? (<Button onClick={this.saveClicked} size="small" color="primary">
+                Save for later
+                </Button>)
+            : null
+    )
+
     render(){
         const data = this.props.data
         
@@ -43,9 +51,7 @@ class Video extends Component{
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button onClick={this.saveClicked} size="small" color="primary">
-                            Save for later
-                        </Button>
+                        {this.saveButton()}
                         <Button onClick={this.watchNowClicked} size="small" color="primary">
                             Watch now
                         </Button> 
@@ -59,7 +65,12 @@ class Video extends Component{
 Video.propTypes = {
     data: PropTypes.object.isRequired,
     openModalClicked: PropTypes.func.isRequired,
-    handleSaveVideo: PropTypes.func.isRequired
+    handleSaveVideo: PropTypes.func.isRequired,
+    showSaveButton: PropTypes.bool.isRequired
+}
+
+Video.defaultProps = {
+    showSaveButton: false
 }
 
 export default Video

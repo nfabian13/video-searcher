@@ -54,12 +54,11 @@ class Home extends Component {
   }
   
   handleSaveVideo(video){
-    console.log('video saved', video)
     this.props.saveVideo(video, this.props.currentUser.userId)
   }
 
   render(){
-    const { isFetching, videoList, currentUser } = this.props
+    const { isFetching, videoList, currentUser, searchError } = this.props
     const title = isFetching ? 'Searching videos...' : 'These are the results based on you search'
     const isLoggedIn = currentUser ? true: false
 
@@ -74,18 +73,29 @@ class Home extends Component {
           style={{padding: 24, width: 500}}
           onChange={this.onTextChanged} />
 
-          <br/>
+        <br/>
 
-          <VideoList 
-            title={title}
-            dataSource={videoList}
-            openModalClicked={this.openModalClicked}
-            handleSaveVideo={this.handleSaveVideo} />
+        {
+          !searchError
+            ? (
+              <div>
+                  <VideoList 
+                    title={title}
+                    dataSource={videoList}
+                    openModalClicked={this.openModalClicked}
+                    handleSaveVideo={this.handleSaveVideo}
+                    showSaveButton={true}
+                    parseDataSource={true} />
 
-          <VideoModal 
-            open={this.props.isModalOpen}
-            handleClose={this.handleModalClose}
-            videoId={this.props.videoId} />
+                  <VideoModal 
+                    open={this.props.isModalOpen}
+                    handleClose={this.handleModalClose}
+                    videoId={this.props.videoId} />
+                </div>
+              )
+            : (<div>Error: {searchError}</div>)
+        }
+          
           
       </div>
     )
@@ -94,7 +104,7 @@ class Home extends Component {
 
 Home.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  videoList: PropTypes.object.isRequired,
+  videoList: PropTypes.array.isRequired,
   searchVideos: PropTypes.func.isRequired
 }
 
@@ -109,7 +119,8 @@ const mapStateToProps = state => {
     videoList: state.videoList,
     isModalOpen: state.openModal,
     videoId: state.videoId,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    searchError: state.searchError
   }
 }
 
