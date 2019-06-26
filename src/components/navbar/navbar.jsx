@@ -3,6 +3,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import {Link} from 'react-router-dom'
 
 const NavBar = (props) => {
     return(
@@ -13,7 +14,7 @@ const NavBar = (props) => {
                         Youtube Video Searcher
                     </Typography>
                     <div style={{marginLeft: 350}}>
-                        <Button color="inherit">My saved Videos</Button>
+                        <Link to="/user/videos">My saved Videos</Link>
                         <Button onClick={props.logout} color="inherit">Logout</Button>
                     </div>
                 </Toolbar>

@@ -1,5 +1,6 @@
 import {SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, 
-    CLOSE_MODAL, AUTH, LOG_OUT, SAVE_VIDEO_REQUEST, SAVE_VIDEO_SUCCESS, SAVE_VIDEO_FAILED}  
+    CLOSE_MODAL, AUTH, LOG_OUT, SAVE_VIDEO_REQUEST, SAVE_VIDEO_SUCCESS, SAVE_VIDEO_FAILED, GET_MY_VIDEO,
+    GET_MY_VIDEO_FAILED}  
     from '../constants/action-types'
 import api from '../api/index'
 import { UserModel, VideoModel } from '../models';
@@ -64,7 +65,7 @@ export function saveVideo(video: VideoModel, userId: string){
 export function getMyVideos(userId:string){
     return (dispatch: any) => {
         return api.getMyVideos(userId)
-            .then((vids: any) => dispatch({type: SAVE_VIDEO_SUCCESS, payload: vids}))
+            .then((vids: any) => dispatch({type: GET_MY_VIDEO, payload: vids}))
             .catch((e: any) => {
                 console.log('error', e)
                 dispatch({type: SAVE_VIDEO_FAILED, payload: 'Error Saving video'})

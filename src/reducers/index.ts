@@ -1,7 +1,8 @@
 import {ActionModel} from '../actions/index'
 
 import { SEARCH_SUCCESS, SEARCH_STARTED, SEARCH_FAILED, OPEN_MODAL, SAVE_VIDEO_REQUEST, SAVE_VIDEO_SUCCESS
-    , SAVE_VIDEO_FAILED, CLOSE_MODAL, AUTH, LOG_OUT } from '../constants/action-types'
+    , SAVE_VIDEO_FAILED, CLOSE_MODAL, AUTH, LOG_OUT, GET_MY_VIDEO,GET_MY_VIDEO_FAILED } 
+from '../constants/action-types'
 
 const initialState: any = {
     searchTerm: '',
@@ -53,11 +54,15 @@ function rootReducer(state = initialState, action: ActionModel){
         return Object.assign({}, state, {isSaving: true})
     }
 
+    if(action.type === SAVE_VIDEO_SUCCESS){
+        return Object.assign({}, state, {isSaving: false})
+    }
+
     if(action.type === SAVE_VIDEO_FAILED){
         return Object.assign({}, state, {isSaving: false, error: action.payload})
     }
 
-    if(action.type === SAVE_VIDEO_SUCCESS){
+    if(action.type === GET_MY_VIDEO){
         return Object.assign({}, state, {
             isSaving: false, 
             myVideos: action.payload
