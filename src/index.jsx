@@ -8,11 +8,12 @@ import App from './components/app'
 
 const { persistor, store } = configureStore()
 
+const Loading = () => <div>Loading...</div>
 
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate
-            loading={null}
+            loading={<Loading/>}
             persistor={persistor}>
             <App />
         </PersistGate>

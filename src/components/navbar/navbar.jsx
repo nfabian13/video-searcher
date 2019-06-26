@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
-export default function NavBar() {
+const NavBar = (props) => {
     return(
         <div style={{flexGrow: 1}}>
             <AppBar position="static">
@@ -14,11 +14,12 @@ export default function NavBar() {
                     </Typography>
                     <div style={{marginLeft: 350}}>
                         <Button color="inherit">My saved Videos</Button>
-                        <Button color="inherit">Logout</Button>
+                        <Button onClick={props.logout} color="inherit">Logout</Button>
                     </div>
                 </Toolbar>
             </AppBar>
         </div>
     )
-
 }
+
+export default NavBar

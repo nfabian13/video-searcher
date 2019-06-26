@@ -39,7 +39,7 @@ function rootReducer(state = initialState, action: ActionModel){
     }
 
     if(action.type === LOG_OUT){
-        return Object.assign({}, state, {currentUser: null})
+        return Object.assign({}, state, {...initialState})
     }
 
     return state

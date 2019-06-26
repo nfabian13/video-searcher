@@ -3,7 +3,7 @@ import NavBar from '../navbar/navbar'
 import SearchInput from '../search-input/search-input'
 import VideoList from '../video-list/video-list'
 import {connect} from 'react-redux'
-import { searchVideos, openModal, closeModal } from '../../actions'
+import { searchVideos, openModal, closeModal, logoutUser } from '../../actions'
 import { Subject } from 'rxjs';
 import {  debounceTime} from 'rxjs/operators';
 import PropTypes from 'prop-types'
@@ -18,7 +18,7 @@ class Home extends Component {
     this.onTextChanged = this.onTextChanged.bind(this)
     this.openModalClicked = this.openModalClicked.bind(this)
     this.handleModalClose = this.handleModalClose.bind(this)
-    this.signup = this.signup.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount(){
@@ -48,7 +48,8 @@ class Home extends Component {
     this.props.closeModal()
   }
 
-  signup(){
+  handleLogout(){
+    this.props.logout()
   }
 
   render(){
@@ -58,7 +59,9 @@ class Home extends Component {
 
     return (
       <div>
-        <NavBar isLoggedIn={isLoggedIn}/>
+        <NavBar 
+          isLoggedIn={isLoggedIn}
+          logout={this.handleLogout}/>
         
         <SearchInput 
           style={{padding: 24, width: 500}}
@@ -106,7 +109,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     searchVideos: value => dispatch(searchVideos(value)),
     openModal: (value, videoId) => dispatch(openModal(value, videoId)),
-    closeModal: () => dispatch(closeModal())
+    closeModal: () => dispatch(closeModal()),
+    logout: () => dispatch(logoutUser())
   };
 }
 
